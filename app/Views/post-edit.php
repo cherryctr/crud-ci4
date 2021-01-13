@@ -13,22 +13,54 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
-                <?php if(isset($validation)) { ?>
+               <?php if(!isset($page)) { ?>
                     <div class="alert alert-danger" role="alert">
+
                         <?php echo $validation->listErrors() ?>
                     </div>
                 <?php } ?>
+
+
                 <div class="card">
                     <div class="card-body">
-                        <form action="<?php echo base_url('post/update/'.$post['id']) ?>" method="POST">
+                        <form action="<?php echo base_url('post/update_files/'.$post['id']) ?>" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="id" class="id" value="<?php echo $post['id'] ?>">
                             <div class="form-group">
                                 <label>TITLE</label>
-                                <input type="text" class="form-control" name="title" value="<?php echo $post['title'] ?>" placeholder="Masukkan Title">
+                                <input type="text" class="form-control <?= ($validation->hasError('title')) ? 'is-invalid' : ''; ?>" name="title" value="<?php echo $post['title'] ?>" placeholder="Masukkan Title">
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError('title'); ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>KONTEN</label>
-                               <textarea class="form-control" name="content" rows="4" placeholder="Masukkan Konten"><?php echo $post['content'] ?></textarea>
+                               <textarea class="form-control <?= ($validation->hasError('content')) ? 'is-invalid' : ''; ?>" name="content" rows="4" placeholder="Masukkan Konten"><?php echo $post['content'] ?></textarea>
+                               <div class="invalid-feedback">
+                                  <?= $validation->getError('content'); ?>
+                                </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Gambar</label>
+                              <input type="file" class="form-control <?= ($validation->hasError('userfile')) ? 'is-invalid' : ''; ?>" name="userfile" placeholder="Masukkan Title"\><br>
+
+                              <input type="hidden" class="form-control" name="olduserfile" value="<?php echo $post['image']; ?>" \><br>
+                              <?php  
+                                        if($post['image'] == false) {
+                                            echo '<div class="alert alert-danger" role="alert">
+                                                    gambar tidak ada
+                                             </div>';
+                                        }else{
+                                            
+                                            echo "<img src='".base_url('upload').'/'.$post['image']."' width=150px; height=100px;>";
+                                        }
+                                      
+                                ?>
+                                <div class="invalid-feedback">
+                                  <?= $validation->getError('userfile'); ?>
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">UPDATE</button>
                         </form>
                     </div>

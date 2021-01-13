@@ -14,8 +14,17 @@ class PostModel extends Model
      */
     protected $allowedFields = [
         'title',
-        'content'
+        'content',
+        'image'
     ];
+
+
+    public function getForEdit($id)
+    {
+        return $this->find($id);
+    }
+
+
 
     // public function get_upload(){
     //     return $this->db->table('posts')->get()->getResultArray();

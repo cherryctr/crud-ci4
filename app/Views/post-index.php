@@ -29,7 +29,7 @@
                             <th>NO</th>
                             <th>TITLE</th>
                             <th>CONTENT</th>
-                            <!-- <th>IMAGES</th> -->
+                            <th>IMAGES</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -40,7 +40,21 @@
                                 <td><?php echo $x; ?></td>
                                 <td><?php echo $post['title'] ?></td>
                                 <td><?php echo $post['content'] ?></td>
-                                <!-- <td><img src="<?php echo base_url('public/upload/'.$post['image']); ?>"></td> -->
+                                <td>
+                                  
+                                    <?php  
+                                        if($post['image'] == false) {
+                                            echo '<div class="alert alert-danger" role="alert">
+                                                    gambar tidak ada
+                                             </div>';
+                                        }else{
+                                            
+                                            echo "<img src='".base_url('upload').'/'.$post['image']."' width=150px; height=100px;>";
+                                        }
+                                      
+                                    ?>
+                                </td>
+                               
                                 <td class="text-center">
                                     <a href="<?php echo base_url('post/edit/'.$post['id']) ?>" class="btn btn-sm btn-primary">EDIT</a>
                                     <a href="<?php echo base_url('post/delete/'.$post['id']) ?>" class="btn btn-sm btn-danger">HAPUS</a>
